@@ -9,6 +9,31 @@ Tout est embarqué dans `dist/wallpaper.js` (Three.js, images, polices) : aucune
 | **Uchiha (hommage)** | La composition du fond d'origine en version nuit : lune douce, silhouette, corbeaux 3D qui se dissolvent, braises orange Flow. |
 | **Jarvis (holo)** | HUD holographique : cœur fresnel, anneaux segmentés, graduations, filaire, étiquettes mono. |
 
+## Version en ligne (mode « URL » de Lively)
+
+Le fond est servi en https depuis le dépôt public : <https://propilot-dev.github.io/flow-nocturne/>
+
+Dans Lively : bouton **+** → onglet **URL** → coller l'adresse, par exemple :
+
+```
+https://propilot-dev.github.io/flow-nocturne/?scene=1
+```
+
+En mode URL, le panneau Personnaliser de Lively n'existe pas : les réglages passent par l'adresse.
+`scene` 0 · 1 · 2, `brightness` 20–120, `motion` 0–100, `density` 0–100, `showClock` 1, `showLogo` 0, `accent` `%23FF7A00`,
+`nightComfort` 0, `bloom` 0, `eco` 1, `parallax` 0. Exemple complet :
+
+```
+https://propilot-dev.github.io/flow-nocturne/?scene=0&brightness=80&showClock=1&eco=1
+```
+
+Pour un déploiement Vercel : importer le dépôt `Propilot-Dev/flow-nocturne` sur <https://vercel.com/new> (préréglage « Other », aucune
+option à changer : `npm run build` reconstruit le bundle et la racine est servie en statique), ou depuis le dossier :
+
+```bash
+npx vercel --prod
+```
+
 ## Installation (5 minutes)
 
 1. Installer **Lively Wallpaper** : Microsoft Store (« Lively Wallpaper », éditeur rocksdanister) ou
