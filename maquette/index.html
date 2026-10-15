@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flow Nocturne — maquette</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+  :root {
+    --ink: #080808; --card: #111111; --card2: #171717; --line: rgba(255,255,255,.07);
+    --orange: #FF7A00; --orange-dim: rgba(255,122,0,.10); --white: #F2F2F2; --muted: #888; --muted2: #444;
+    --display: 'Bebas Neue', Impact, sans-serif; --body: 'DM Sans', system-ui, sans-serif; --mono: 'DM Mono', Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--ink); color: var(--white); font-family: var(--body); font-weight: 300; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  a { color: var(--orange); text-decoration: none; border-bottom: 1px solid rgba(255,122,0,.35); }
+  a:hover { border-bottom-color: var(--orange); }
+  .wrap { width: min(1180px, 92vw); margin: 0 auto; }
+  header { padding: 7vh 0 4vh; position: relative; }
+  header::before { content: ''; position: absolute; inset: -40vh -50vw auto; height: 90vh; background: radial-gradient(50% 60% at 50% 100%, rgba(255,122,0,.14), transparent 70%); pointer-events: none; z-index: -1; }
+  .eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--orange); }
+  h1 { font-family: var(--display); font-weight: 400; font-size: clamp(64px, 11vw, 168px); line-height: .88; letter-spacing: .01em; margin: .15em 0 .2em; }
+  h1 em { font-style: normal; color: var(--orange); }
+  .lede { max-width: 56ch; font-size: clamp(17px, 1.4vw, 21px); color: #cfcfcf; }
+  h2 { font-family: var(--display); font-weight: 400; font-size: clamp(40px, 5vw, 72px); line-height: .95; margin: 0 0 .4em; letter-spacing: .01em; }
+  h2 span { color: var(--muted2); }
+  section { padding: 9vh 0; border-top: 1px solid var(--line); }
+  .num { font-family: var(--mono); color: var(--muted); font-size: 13px; letter-spacing: .18em; margin-bottom: 1.2em; }
+
+  /* live frame */
+  .live { position: relative; aspect-ratio: 16/9; border-radius: 3px; overflow: hidden; background: #000; border: 1px solid var(--line); box-shadow: 0 40px 120px -40px rgba(255,122,0,.25); }
+  .live iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 14px 0 0; font-family: var(--mono); font-size: 13px; }
+  .bar button { font: inherit; letter-spacing: .08em; text-transform: uppercase; background: var(--card); color: var(--white); border: 1px solid var(--line); border-radius: 3px; padding: 10px 14px; cursor: pointer; }
+  .bar button[aria-pressed="true"] { background: var(--orange); color: #080808; border-color: var(--orange); }
+  .bar .sp { flex: 1; }
+  .bar label { color: var(--muted); display: flex; align-items: center; gap: 8px; }
+
+  /* cards */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 3px; overflow: hidden; display: flex; flex-direction: column; }
+  .card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: #000; }
+  .card .b { padding: 18px 20px 22px; }
+  .card h3 { font-family: var(--display); font-weight: 400; font-size: 34px; margin: 0 0 .25em; letter-spacing: .02em; }
+  .card h3 small { font-family: var(--mono); font-size: 11px; letter-spacing: .2em; color: var(--orange); vertical-align: middle; margin-left: .6em; }
+  .card p { margin: 0; color: #c7c7c7; font-size: 15px; }
+  .tags { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; color: var(--muted); border: 1px solid var(--line); padding: 4px 8px; border-radius: 2px; }
+
+  /* measures */
+  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  th, td { text-align: left; padding: 14px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-family: var(--mono); font-weight: 400; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+  td.n { font-family: var(--mono); color: var(--white); white-space: nowrap; }
+  td.n b { color: var(--orange); font-weight: 400; }
+  .two { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: start; }
+  @media (max-width: 860px) { .two { grid-template-columns: 1fr; } }
+  .swatches { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+  .sw { width: 64px; height: 64px; border-radius: 3px; border: 1px solid var(--line); position: relative; }
+  .sw i { position: absolute; left: 0; right: 0; bottom: -20px; font-family: var(--mono); font-style: normal; font-size: 10px; color: var(--muted); letter-spacing: .05em; text-align: center; }
+
+  ol.steps { counter-reset: s; list-style: none; padding: 0; margin: 0; }
+  ol.steps li { counter-increment: s; position: relative; padding: 16px 0 16px 64px; border-bottom: 1px solid var(--line); color: #d5d5d5; }
+  ol.steps li::before { content: counter(s, decimal-leading-zero); position: absolute; left: 0; top: 14px; font-family: var(--display); font-size: 34px; color: var(--orange); }
+  code { font-family: var(--mono); font-size: .92em; background: var(--card2); padding: 2px 6px; border-radius: 2px; color: #e9e9e9; }
+  .sources li { margin: 8px 0; color: #c7c7c7; }
+  .sources ul { padding-left: 18px; }
+  .vision p { max-width: 70ch; color: #d0d0d0; font-size: 17px; }
+  .vision .k { color: var(--white); font-weight: 500; }
+  footer { padding: 6vh 0 10vh; color: var(--muted); font-family: var(--mono); font-size: 12px; letter-spacing: .1em; border-top: 1px solid var(--line); }
+  .reveal { opacity: 0; transform: translateY(14px); animation: in .8s cubic-bezier(.2,.7,.2,1) forwards; }
+  @keyframes in { to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .reveal { animation: none; opacity: 1; transform: none; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow reveal">Flow · fond d'écran animé · maquette v0.1</div>
+    <h1 class="reveal" style="animation-delay:.08s">Flow<br><em>Nocturne</em></h1>
+    <p class="lede reveal" style="animation-delay:.16s">Trois scènes animées pour le bureau, calibrées pour la nuit : lune ivoire, encre, braises orange Flow, holo. Le rouge vif d'Itachi devient une nuit profonde où la composition reste, mais ne pique plus les yeux.</p>
+  </header>
+
+  <section id="live">
+    <div class="num">01 — EN DIRECT</div>
+    <h2>La maquette <span>tourne ici</span></h2>
+    <div class="live"><iframe id="frame" src="../index.html?scene=1" title="Flow Nocturne en direct" allow="fullscreen"></iframe></div>
+    <div class="bar" role="group" aria-label="Choisir la scène">
+      <button data-scene="0">Nuit Flow</button>
+      <button data-scene="1" aria-pressed="true">Uchiha</button>
+      <button data-scene="2">Jarvis</button>
+      <span class="sp"></span>
+      <label><input type="checkbox" id="clock"> heure</label>
+      <label><input type="range" id="bright" min="20" max="120" value="70"> luminosité <span id="bv">70</span></label>
+      <button id="fs">Plein écran</button>
+    </div>
+  </section>
+
+  <section id="scenes">
+    <div class="num">02 — TROIS SCÈNES</div>
+    <h2>Un moteur, <span>trois ambiances</span></h2>
+    <div class="grid">
+      <article class="card">
+        <img src="shots/nuit-flow.png" alt="Scène Nuit Flow : ciel d'encre, poussière, sol holographique orange discret, heure et logo Flow">
+        <div class="b"><h3>Nuit Flow <small>NEUTRE</small></h3>
+          <p>Le thème pour bosser dessus huit heures : encre, poussière en profondeur, sol holographique à peine là, la marque en bas à droite. Rien ne bouge vite, rien ne crie.</p>
+          <div class="tags"><span class="tag">particules 3D</span><span class="tag">grille holo</span><span class="tag">horloge</span></div></div>
+      </article>
+      <article class="card">
+        <img src="shots/uchiha.png" alt="Scène Uchiha : lune ivoire, silhouette sur poteau électrique, corbeaux, braises orange">
+        <div class="b"><h3>Uchiha <small>HOMMAGE</small></h3>
+          <p>La composition du fond d'origine, en version nuit. Les corbeaux s'envolent du poteau, se dissolvent en encre puis en braises, un anneau de tomoe fantôme tourne dans le halo.</p>
+          <div class="tags"><span class="tag">lune shader</span><span class="tag">corbeaux instanciés</span><span class="tag">braises Amaterasu</span></div></div>
+      </article>
+      <article class="card">
+        <img src="shots/jarvis.png" alt="Scène Jarvis : cœur orange, anneaux segmentés, graduations, filaire, étiquettes mono">
+        <div class="b"><h3>Jarvis <small>HOLO</small></h3>
+          <p>Le HUD d'un atelier Stark en orange Flow : cœur fresnel, anneaux segmentés qui tournent sur trois axes, graduations, filaire, étiquettes mono qui clignotent.</p>
+          <div class="tags"><span class="tag">fresnel</span><span class="tag">anneaux GLSL</span><span class="tag">HUD DOM</span></div></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="nuit">
+    <div class="num">03 — POURQUOI ÇA PIQUE MOINS</div>
+    <div class="two">
+      <div>
+        <h2>Le rouge vif <span>devient nuit</span></h2>
+        <p style="color:#d0d0d0;max-width:60ch">Le fond d'origine pose un rouge saturé sur toute la surface et une lune à 100 % de blanc : l'œil n'a nulle part où se poser le soir. Ici le ciel est de l'encre, la lune une ivoire chaude qui plafonne à 76 % de luminance, et l'orange Flow n'apparaît que sur des points : braises, holo, grille. Mesures faites sur les images réelles en 1920 × 1080 (luminance relative, image gelée à t = 14 s).</p>
+        <div class="swatches">
+          <div class="sw" style="background:#AD0C2B"><i>origine</i></div>
+          <div class="sw" style="background:#0a0b14"><i>ciel</i></div>
+          <div class="sw" style="background:#e6dccb"><i>lune</i></div>
+          <div class="sw" style="background:#b48b6e"><i>halo</i></div>
+          <div class="sw" style="background:#FF7A00"><i>accent</i></div>
+          <div class="sw" style="background:#05060c"><i>encre</i></div>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Image</th><th>Luminance moyenne</th><th>Pic</th><th>Pixels > mi-gris</th></tr></thead>
+        <tbody>
+          <tr><td>Fond d'origine (rouge)</td><td class="n">20,3 %</td><td class="n">100 %</td><td class="n">12,9 %</td></tr>
+          <tr><td>Uchiha, version nuit</td><td class="n"><b>9,5 %</b></td><td class="n"><b>76 %</b></td><td class="n">14,9 %</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="color:var(--muted);font-size:14px;max-width:70ch;margin-top:18px">La part de pixels au-dessus du mi-gris monte un peu : la lune et son halo occupent plus de surface, mais à 76 % au lieu de 100 %, et la luminance moyenne de l'écran est divisée par deux. Le réglage « Luminosité » descend à 20 % si besoin, et « Confort nuit » retire le bleu.</p>
+  </section>
+
+  <section id="reglages">
+    <div class="num">04 — RÉGLAGES & ACCESSIBILITÉ</div>
+    <h2>Chaque thème est <span>un jeu de curseurs</span></h2>
+    <div class="two">
+      <table>
+        <thead><tr><th>Réglage Lively</th><th>Effet</th></tr></thead>
+        <tbody>
+          <tr><td class="n">Scène</td><td>Nuit Flow · Uchiha · Jarvis</td></tr>
+          <tr><td class="n">Luminosité 20–120</td><td>Exposition globale ; 70 la nuit, 100 le jour</td></tr>
+          <tr><td class="n">Mouvement 0–100</td><td>0 = image fixe, le GPU ne rend plus rien</td></tr>
+          <tr><td class="n">Particules 0–100</td><td>Poussière, braises, corbeaux</td></tr>
+          <tr><td class="n">Parallaxe</td><td>La caméra suit le curseur, sinon dérive lente</td></tr>
+          <tr><td class="n">Logo · Heure</td><td>Marque holographique ; horloge Bebas Neue</td></tr>
+          <tr><td class="n">Couleur d'accent</td><td>Orange Flow par défaut, libre</td></tr>
+          <tr><td class="n">Confort nuit</td><td>Lune ivoire, moins de bleu</td></tr>
+          <tr><td class="n">Lueur · Éco</td><td>Bloom ; 30 i/s sans bloom, résolution 1×</td></tr>
+        </tbody>
+      </table>
+      <div class="vision">
+        <p><span class="k">Accessible par construction.</span> Le réglage système « réduire les animations » est respecté : une seule image, plus de rendu. « Mouvement » à 0 fait pareil à la main, pour les troubles vestibulaires ou l'attention. « Luminosité » et « Confort nuit » couvrent la photosensibilité. Les textes (heure, étiquettes) sont du DOM, pas des pixels dans le canvas : ils restent lisibles par un lecteur d'écran et nets à toute résolution.</p>
+        <p><span class="k">Léger par défaut.</span> Un seul fichier, aucune requête réseau, résolution plafonnée à 1,5×, rendu suspendu quand Lively met le fond en pause (plein écran, jeu).</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="install">
+    <div class="num">05 — INSTALLATION</div>
+    <h2>Cinq minutes, <span>zéro compte</span></h2>
+    <ol class="steps">
+      <li>Installer <a href="https://github.com/rocksdanister/lively/releases">Lively Wallpaper</a> (gratuit, open source ; aussi sur le Microsoft Store).</li>
+      <li>Glisser <code>Flow-Nocturne-lively.zip</code> dans la fenêtre Lively. Le fond apparaît dans la bibliothèque.</li>
+      <li>Clic sur la vignette : c'est appliqué. Clic droit → <b>Personnaliser</b> pour les curseurs ci-dessus.</li>
+      <li>Deux écrans : onglet « Écrans » de Lively, dupliquer ou choisir une scène par écran (Uchiha au centre, Nuit Flow sur l'écran de travail, par exemple).</li>
+      <li>Paramètres → Performance : « pause si application plein écran » pour ne rien perdre en jeu ou en montage.</li>
+    </ol>
+  </section>
+
+  <section id="sources">
+    <div class="num">06 — SOURCES & INSPIRATIONS</div>
+    <h2>D'où ça vient</h2>
+    <div class="two sources">
+      <div>
+        <ul>
+          <li><b>Marque Flow</b> — noir <code>#080808</code>, orange <code>#FF7A00</code>, blanc <code>#F2F2F2</code>, Bebas Neue + DM Sans + DM Mono, logo : relevés sur <a href="https://flow-consulting.fr">flow-consulting.fr</a>.</li>
+          <li><b>Composition</b> — le fond Itachi fourni (lune, poteau, corbeaux vers la gauche). La silhouette est un masque alpha extrait de cette image, usage personnel ; une version vectorielle originale est prévue pour une diffusion.</li>
+          <li><b>Lively Wallpaper</b> — <a href="https://github.com/rocksdanister/lively/wiki/Web-Guide-IV-:-Interaction">API des propriétés</a>, <a href="https://github.com/rocksdanister/lively/wiki/Web-Guide-V-:-System-Data">événements système</a>, <a href="https://github.com/rocksdanister/lively/wiki/Command-Line-Controls">ligne de commande</a>.</li>
+          <li><b>Moteur</b> — <a href="https://threejs.org/">Three.js</a> r186 (bloom <em>UnrealBloomPass</em>, OutputPass ACES), esbuild. Polices <a href="https://fonts.google.com/specimen/Bebas+Neue">Bebas Neue</a>, <a href="https://fonts.google.com/specimen/DM+Mono">DM Mono</a>, <a href="https://fonts.google.com/specimen/DM+Sans">DM Sans</a> (OFL).</li>
+        </ul>
+      </div>
+      <div>
+        <ul>
+          <li><b>Naruto</b> — le shunshin d'Itachi (le corps qui se défait en corbeaux), Amaterasu (les flammes noires, ici des braises), les trois tomoe du Sharingan en filigrane dans le halo.</li>
+          <li><b>MCU</b> — les interfaces holographiques de l'atelier de Tony Stark (anneaux, graduations, étiquettes mono, scanlines) : scène Jarvis.</li>
+          <li><b>Pistes suivantes</b> — <em>Speed Force</em> (DC : éclairs orange, traînées), <em>Patronus</em> (Wizarding World : volutes argentées sur encre), <em>Konoha la nuit</em> (lanternes, lucioles, falaise des Hokage).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="suite" class="vision">
+    <div class="num">07 — ET APRÈS</div>
+    <h2>Un fond d'écran, <span>c'est déjà un thème</span></h2>
+    <p>Ce qui est livré ici n'est pas trois images : c'est <span class="k">un moteur et un jeu de jetons</span> (accent, luminance, mouvement, densité, confort, éco) que chaque scène interprète. Le thème neutre est la base de travail ; les thèmes « lore » sont des peaux par-dessus, et les curseurs d'accessibilité sont les mêmes pour tous.</p>
+    <p>C'est exactement la mécanique d'une <span class="k">banque de thèmes</span> pour des interfaces métier : une grammaire commune (jetons, états, contrastes, mouvement réduit, lecture d'écran), un thème neutre irréprochable, puis des peaux à l'infini, du sobre au Sharingan, sans jamais casser l'usage. La cartographie des métiers vient nourrir la couche d'en dessous : quels écrans, quels gestes, quelles données chaque savoir-faire manipule.</p>
+  </section>
+
+  <footer>FLOW NOCTURNE · V0.1 · <a href="../README.md">README</a> · USAGE PERSONNEL</footer>
+</div>
+<script>
+  const frame = document.getElementById('frame');
+  const state = { scene: 1, clock: 0, bright: 70 };
+  const sync = () => { frame.src = `../index.html?scene=${state.scene}&showClock=${state.clock}&brightness=${state.bright}`; };
+  document.querySelectorAll('.bar button[data-scene]').forEach((b) => b.addEventListener('click', () => {
+    document.querySelectorAll('.bar button[data-scene]').forEach((x) => x.setAttribute('aria-pressed', 'false'));
+    b.setAttribute('aria-pressed', 'true'); state.scene = Number(b.dataset.scene); sync();
+  }));
+  document.getElementById('clock').addEventListener('change', (e) => { state.clock = e.target.checked ? 1 : 0; sync(); });
+  const bright = document.getElementById('bright'), bv = document.getElementById('bv');
+  bright.addEventListener('change', (e) => { state.bright = Number(e.target.value); bv.textContent = state.bright; sync(); });
+  bright.addEventListener('input', (e) => { bv.textContent = e.target.value; });
+  document.getElementById('fs').addEventListener('click', () => { const el = document.querySelector('.live'); (el.requestFullscreen || el.webkitRequestFullscreen).call(el); });
+</script>
+</body>
+</html>

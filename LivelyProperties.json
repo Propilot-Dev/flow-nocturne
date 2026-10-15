@@ -1,0 +1,71 @@
+{
+  "scene": {
+    "type": "dropdown",
+    "text": "Scène",
+    "help": "Nuit Flow = thème neutre pour travailler. Uchiha = hommage au fond d'origine. Jarvis = HUD holographique.",
+    "value": 1,
+    "items": ["Nuit Flow (neutre)", "Uchiha (hommage)", "Jarvis (holo)"]
+  },
+  "brightness": {
+    "type": "slider",
+    "text": "Luminosité",
+    "help": "Exposition globale. 70 = réglage nuit ; montez vers 100 en journée.",
+    "value": 70,
+    "min": 20,
+    "max": 120,
+    "step": 1
+  },
+  "motion": {
+    "type": "slider",
+    "text": "Mouvement",
+    "help": "0 = image fixe (aucun rendu GPU en continu).",
+    "value": 60,
+    "min": 0,
+    "max": 100,
+    "step": 1
+  },
+  "density": {
+    "type": "slider",
+    "text": "Particules",
+    "help": "Quantité de poussière, braises et corbeaux.",
+    "value": 55,
+    "min": 0,
+    "max": 100,
+    "step": 1
+  },
+  "parallax": {
+    "type": "checkbox",
+    "text": "Parallaxe à la souris",
+    "value": true
+  },
+  "showLogo": {
+    "type": "checkbox",
+    "text": "Logo Flow holographique",
+    "value": true
+  },
+  "showClock": {
+    "type": "checkbox",
+    "text": "Afficher l'heure",
+    "value": false
+  },
+  "accent": {
+    "type": "color",
+    "text": "Couleur d'accent",
+    "value": "#FF7A00"
+  },
+  "nightComfort": {
+    "type": "checkbox",
+    "text": "Confort nuit (lune chaude, moins de bleu)",
+    "value": true
+  },
+  "bloom": {
+    "type": "checkbox",
+    "text": "Lueur (bloom)",
+    "value": true
+  },
+  "eco": {
+    "type": "checkbox",
+    "text": "Mode éco (30 i/s, sans bloom)",
+    "value": false
+  }
+}

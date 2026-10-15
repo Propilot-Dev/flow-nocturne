@@ -1,0 +1,14 @@
+{
+  "AppVersion": "2.0.0.0",
+  "Title": "Flow Nocturne",
+  "Thumbnail": "thumbnail.jpg",
+  "Preview": "preview.gif",
+  "Desc": "Fond d'écran animé Flow : trois scènes (Nuit Flow neutre, Uchiha hommage, Jarvis holo), particules, lune, corbeaux 3D, logo holographique. Réglages dans l'onglet Personnaliser.",
+  "Author": "Flow",
+  "License": "Usage personnel. Three.js (MIT), Bebas Neue et DM Mono (OFL).",
+  "Contact": "https://flow-consulting.fr",
+  "Type": "web",
+  "FileName": "index.html",
+  "Arguments": "--pause-event true",
+  "IsAbsolutePath": false
+}
